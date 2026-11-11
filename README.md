@@ -1,7 +1,7 @@
 
 # Project VietSchool Tool                                 
 **Version 1.0.1 Lastest**  
-*Claude has created this tool :>>.*
+*This tool created for reference and learning purpose💖*
 
 ![GitHub release](https://img.shields.io/badge/release-v1.0-blue)  
 ![License](https://img.shields.io/badge/license-MIT-lightgrey)
