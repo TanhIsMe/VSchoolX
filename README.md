@@ -2,6 +2,7 @@
 # Project VietSchool Tool                                 
 **Version 1.0.1 Lastest**  
 *This tool created for reference and learning purpose💖*
+---
 *obfucasted to avoid being patched😭*
 
 ![GitHub release](https://img.shields.io/badge/release-v1.0-blue)  
