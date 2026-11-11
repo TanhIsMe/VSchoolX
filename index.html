@@ -69,8 +69,8 @@
           <span class="ql-tag">1-Click Run</span>
         </div>
         <div class="code-box">
-          <code>fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);</code>
-          <button class="copy-btn" id="copyHeroBtn" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+          <code>fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);</code>
+          <button class="copy-btn" id="copyHeroBtn" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);">
             <i class="fa-regular fa-copy"></i>
             <span>Sao chép lệnh</span>
           </button>
@@ -378,8 +378,8 @@
               <h3>Sao chép và Dán lệnh khởi chạy</h3>
               <p>Sao chép đoạn mã bên dưới, dán vào dòng lệnh ở thẻ Console và nhấn <strong>Enter</strong>:</p>
               <div class="code-snippet">
-                <pre><code>fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);</code></pre>
-                <button class="copy-btn mini" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+                <pre><code>fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);</code></pre>
+                <button class="copy-btn mini" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);">
                   <i class="fa-regular fa-copy"></i> Copy
                 </button>
               </div>
@@ -411,7 +411,7 @@
             <div class="step-num">2</div>
             <div class="step-body">
               <h3>Thêm Script chạy trên Mobile</h3>
-              <p>Trong ứng dụng Stay/Userscripts, chọn thêm Userscript mới và nhập đường dẫn bản Mobile:</p>
+              <p>Trong ứng dụng WebInspector, cấp quyền safari cho tiện ích</p>
               <div class="code-snippet">
                 <pre><code>https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-mb.js</code></pre>
                 <button class="copy-btn mini" data-code="https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-mb.js">
@@ -425,7 +425,7 @@
             <div class="step-num">3</div>
             <div class="step-body">
               <h3>Truy cập VietSchool trên Safari</h3>
-              <p>Vào trang VietSchool trên Safari, script sẽ tự động kích hoạt giao diện tối ưu riêng cho màn hình điện thoại với font chữ lớn và thanh điều hướng cảm ứng thuận tiện.</p>
+              <p>Vào trang VietSchool trên Safari, mở phần tuỳ chỉnh trang, chọn tiện ích WebInspector, qua tab consle và dán lệnh</p>
             </div>
           </div>
         </div>
@@ -448,8 +448,8 @@
               <h3>Mở Developer Tools hoặc Bookmarklet</h3>
               <p>Trên Kiwi Browser: Bấm vào menu 3 chấm ở góc trên &gt; chọn <strong>Developer Tools</strong> &gt; chuyển qua tab <strong>Console</strong> và dán đoạn mã chạy nhanh tương tự như trên PC.</p>
               <div class="code-snippet">
-                <pre><code>fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);</code></pre>
-                <button class="copy-btn mini" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+                <pre><code>fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);</code></pre>
+                <button class="copy-btn mini" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);">
                   <i class="fa-regular fa-copy"></i> Copy
                 </button>
               </div>
@@ -566,11 +566,11 @@
 
         <div class="faq-item">
           <button class="faq-question">
-            <span>5. Nếu tôi dán script vào một trang web khác ngoài VietSchool thì sao?</span>
+            <span>5. Nếu tôi dán script vào trang web mà bị lỗi pasting thì sao?</span>
             <i class="fa-solid fa-chevron-down"></i>
           </button>
           <div class="faq-answer">
-            <p>Từ phiên bản v2.0, nếu script phát hiện không ở trang VietSchool (hoặc chưa đăng nhập), nó sẽ tự động ẩn tất cả các tính năng liên quan đến VietSchool (nút chạy, nút quét, tab phòng, thống kê) và tự động mở tab <strong>Công cụ AI</strong> để bạn sử dụng như một trợ lý AI giải bài và tiện ích ghi chép độc lập!</p>
+            <p> Ghi lệnh <strong>allow pasting</strong> vào consle và dán lệnh lại lần nữa sẽ thành công!</p>
           </div>
         </div>
       </div>
@@ -583,10 +583,10 @@
       <h2>Sẵn sàng tối ưu hóa việc học trực tuyến?</h2>
       <p>Truy cập GitHub repo để xem mã nguồn, đóng góp ý kiến hoặc chia sẻ cho bạn bè cùng lớp!</p>
       <div class="cta-btns">
-        <button class="btn btn-primary" id="copyBottomBtn" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+        <button class="btn btn-primary" id="copyBottomBtn" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);">
           <i class="fa-regular fa-copy"></i> Sao chép lệnh F12
         </button>
-        <a href="https://github.com/TanhIsMe/VietSchool-Tool" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+        <a href="https://github.com/TanhIsMe/VSchoolX" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
           <i class="fa-brands fa-github"></i> Star trên GitHub ⭐
         </a>
       </div>
@@ -615,14 +615,14 @@
       <div class="footer-col">
         <h4>Mã nguồn & Đóng góp</h4>
         <ul>
-          <li><a href="https://github.com/TanhIsMe/VietSchool-Tool" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub Repository</a></li>
-          <li><a href="https://github.com/TanhIsMe/VietSchool-Tool/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-scale-balanced"></i> Giấy phép MIT</a></li>
-          <li><a href="https://github.com/TanhIsMe/VietSchool-Tool/issues" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-circle-exclamation"></i> Báo lỗi & Góp ý</a></li>
+          <li><a href="https://github.com/TanhIsMe/VSchoolX" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub Repository</a></li>
+          <li><a href="https://github.com/TanhIsMe/VSchoolX/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-scale-balanced"></i> Giấy phép MIT</a></li>
+          <li><a href="https://github.com/TanhIsMe/VSchoolX/issues" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-circle-exclamation"></i> Báo lỗi & Góp ý</a></li>
         </ul>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>© 2026 VietSchool Tool. Được phát hành dưới giấy phép mã nguồn mở <a href="https://github.com/TanhIsMe/VietSchool-Tool/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
+      <p>© 2026 VietSchool Tool. Được phát hành dưới giấy phép mã nguồn mở <a href="https://github.com/TanhIsMe/VSchoolX/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
       <p class="disclaimer">Lưu ý: Dự án được tạo ra với mục đích học tập và hỗ trợ nghiên cứu công nghệ web.</p>
     </div>
   </footer>
