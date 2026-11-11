@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VietSchool Tool - Trợ lý học tập & Tự động hóa VietSchool</title>
+  <meta name="description" content="Trang giới thiệu và hướng dẫn sử dụng VietSchool Tool - Tiện ích tự động hóa học tập, trợ lý AI giải bài đa năng và thống kê học tập cho VietSchool.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+        <span class="logo-text">VietSchool <span>Tool</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">Tính năng</a></li>
+        <li><a href="#demo">Giao diện</a></li>
+        <li><a href="#guide">Hướng dẫn</a></li>
+        <li><a href="#shortcuts">Phím tắt</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-toggle" id="themeToggle" title="Chuyển giao diện Sáng / Tối" aria-label="Theme toggle">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <a href="https://github.com/TanhIsMe/VietSchool-Tool" target="_blank" rel="noopener noreferrer" class="btn-github">
+          <i class="fa-brands fa-github"></i>
+          <span>GitHub Repo</span>
+          <span class="star-badge"><i class="fa-solid fa-star"></i> Star</span>
+        </a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Menu">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="container hero-content">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        <span>Phiên bản v1.0 - Tích hợp AI Gemini & Hỗ trợ 10 ảnh</span>
+      </div>
+      <h1 class="hero-title">
+        Tự động hóa & Trợ lý học tập thông minh cho <span class="gradient-text">VietSchool</span>
+      </h1>
+      <p class="hero-desc">
+        Công cụ tối ưu hóa trải nghiệm học trực tuyến: tự động vào phòng, xác nhận đọc bài học, tích hợp trợ lý AI giải bài tập đa ảnh, thống kê tiến độ học tập trực quan và bảo vệ bài kiểm tra.
+      </p>
+
+      <!-- Quick Launch Box -->
+      <div class="quick-launch-card">
+        <div class="ql-header">
+          <div class="ql-title">
+            <i class="fa-solid fa-bolt"></i>
+            <span>Khởi chạy nhanh qua F12 Console (PC)</span>
+          </div>
+          <span class="ql-tag">1-Click Run</span>
+        </div>
+        <div class="code-box">
+          <code>fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);</code>
+          <button class="copy-btn" id="copyHeroBtn" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+            <i class="fa-regular fa-copy"></i>
+            <span>Sao chép lệnh</span>
+          </button>
+        </div>
+        <div class="ql-note">
+          <i class="fa-solid fa-circle-info"></i> Chỉ cần mở trang VietSchool đã đăng nhập, ấn <strong>F12</strong> &gt; dán lệnh vào tab <strong>Console</strong> &gt; nhấn <strong>Enter</strong>.
+        </div>
+      </div>
+
+      <div class="hero-btns">
+        <a href="#guide" class="btn btn-primary">
+          <i class="fa-solid fa-book-open"></i> Xem hướng dẫn chi tiết
+        </a>
+        <a href="https://github.com/TanhIsMe/VietSchool-Tool" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <i class="fa-brands fa-github"></i> Xem mã nguồn GitHub
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Highlights Stats -->
+  <section class="highlights">
+    <div class="container highlights-grid">
+      <div class="highlight-item">
+        <div class="h-icon"><i class="fa-solid fa-gauge-high"></i></div>
+        <div class="h-text">
+          <h3>Tốc độ & Hiệu quả</h3>
+          <p>Xử lý đồng thời nhiều phòng học, tự động tính thời gian đọc dựa trên lượng từ.</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="h-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="h-text">
+          <h3>Bảo vệ an toàn</h3>
+          <p>Cảnh báo phòng kiểm tra, không tự ý nộp bài. Có chế độ Xem trước (Dry Run).</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="h-icon"><i class="fa-solid fa-robot"></i></div>
+        <div class="h-text">
+          <h3>Trợ lý AI Đa ảnh</h3>
+          <p>Tải lên tối đa 10 ảnh bài tập, tự động chuyển model dự phòng thông minh.</p>
+        </div>
+      </div>
+      <div class="highlight-item">
+        <div class="h-icon"><i class="fa-solid fa-chart-pie"></i></div>
+        <div class="h-text">
+          <h3>Thống kê toàn diện</h3>
+          <p>Biểu đồ 7 ngày, 8 tuần, phân loại theo môn và biểu đồ nhiệt 13 tuần.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Mockup Demo Section -->
+  <section class="section demo-section" id="demo">
+    <div class="container">
+      <div class="section-header">
+        <span class="sub-badge">Trực quan & Hiện đại</span>
+        <h2>Giao diện bảng điều khiển thông minh</h2>
+        <p>Bảng điều khiển dạng Widget nổi với hiệu ứng kính mờ (Glassmorphism), kéo thả tự do và tùy biến màu sắc không giới hạn.</p>
+      </div>
+
+      <div class="demo-wrapper">
+        <!-- Floating Tool Widget Mockup -->
+        <div class="mockup-widget">
+          <div class="mw-head">
+            <div class="mw-logo"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="mw-title">
+              <b>VietSchool Tool</b>
+              <span><i class="status-dot dot-run"></i> Đang chạy • Tự động quét phòng</span>
+            </div>
+            <div class="mw-actions">
+              <span class="mw-ib"><i class="fa-solid fa-magnifying-glass"></i></span>
+              <span class="mw-ib"><i class="fa-solid fa-expand"></i></span>
+              <span class="mw-ib"><i class="fa-solid fa-minus"></i></span>
+              <span class="mw-ib"><i class="fa-solid fa-xmark"></i></span>
+            </div>
+          </div>
+
+          <div class="mw-body">
+            <!-- 4 stat boxes -->
+            <div class="mw-stats">
+              <div class="mw-stat t"><b>18</b><span>Tổng</span></div>
+              <div class="mw-stat p"><b>3</b><span>Chờ</span></div>
+              <div class="mw-stat o"><b>15</b><span>Xong</span></div>
+              <div class="mw-stat e"><b>0</b><span>Lỗi</span></div>
+            </div>
+
+            <!-- Progress bar -->
+            <div class="mw-bar"><div class="mw-bar-fill" style="width: 83%;"></div></div>
+
+            <!-- Action buttons -->
+            <div class="mw-btns">
+              <button class="mw-btn main"><i class="fa-solid fa-pause"></i> Dừng</button>
+              <button class="mw-btn sec ic" title="Làm mới"><i class="fa-solid fa-arrows-rotate"></i></button>
+              <button class="mw-btn sec ic" title="Thử lại lỗi"><i class="fa-solid fa-wrench"></i></button>
+              <button class="mw-btn sec ic" title="Báo cáo"><i class="fa-solid fa-clipboard-list"></i></button>
+              <button class="mw-btn sec ic" title="Xuất CSV"><i class="fa-solid fa-file-csv"></i></button>
+            </div>
+
+            <!-- Main view with tabs -->
+            <div class="mw-main">
+              <div class="mw-tabs">
+                <div class="mw-tab"><i class="fa-solid fa-terminal"></i><span>Nhật ký</span></div>
+                <div class="mw-tab"><i class="fa-solid fa-school"></i><span>Phòng</span></div>
+                <div class="mw-tab"><i class="fa-solid fa-chart-column"></i><span>Thống kê</span></div>
+                <div class="mw-tab on"><i class="fa-solid fa-toolbox"></i><span>Công cụ (AI)</span></div>
+                <div class="mw-tab"><i class="fa-solid fa-palette"></i><span>Màu</span></div>
+                <div class="mw-tab"><i class="fa-solid fa-database"></i><span>Dữ liệu</span></div>
+                <div class="mw-tab"><i class="fa-solid fa-gear"></i><span>Cài đặt</span></div>
+              </div>
+
+              <!-- AI Chat Preview -->
+              <div class="mw-pane">
+                <div class="mw-chat-preview">
+                  <div class="msg-bubble user">
+                    <div class="img-group">
+                      <span class="preview-thumb"><i class="fa-solid fa-image"></i> Ảnh 1</span>
+                      <span class="preview-thumb"><i class="fa-solid fa-image"></i> Ảnh 2</span>
+                      <span class="img-count-tag">+2 ảnh</span>
+                    </div>
+                    <span>Hãy giải chi tiết từng bước 2 bài toán trong các ảnh này và cho biết đáp án cuối cùng.</span>
+                  </div>
+                  <div class="msg-bubble ai">
+                    <b><i class="fa-solid fa-robot"></i> Gemini 2.5 Flash:</b>
+                    <p><strong>Bài 1:</strong> Ta áp dụng định lý Pytago trong tam giác vuông ABC...</p>
+                    <p class="res-highlight">👉 <strong>Đáp án:</strong> x = 12 cm, y = 5 cm.</p>
+                    <span class="tag-model">gemini-2.5-flash • 1.2s • Tối ưu prompt: Bật</span>
+                  </div>
+                  <div class="chat-input-bar">
+                    <input type="text" placeholder="Hỏi AI... (hỗ trợ kéo thả tối đa 10 ảnh, dán ảnh Ctrl+V)" disabled>
+                    <button class="btn-send-demo"><i class="fa-solid fa-paper-plane"></i> Gửi</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlights list next to demo -->
+        <div class="demo-features-side">
+          <div class="df-card">
+            <div class="df-icon"><i class="fa-solid fa-images"></i></div>
+            <div class="df-info">
+              <h4>Hỗ trợ Upload 10 Ảnh cùng lúc</h4>
+              <p>Chụp màn hình trực tiếp hoặc dán nhiều ảnh bài tập để AI giải quyết nhanh chóng trong 1 lượt hỏi.</p>
+            </div>
+          </div>
+          <div class="df-card">
+            <div class="df-icon"><i class="fa-solid fa-microchip"></i></div>
+            <div class="df-info">
+              <h4>Chuỗi dự phòng 3 Model AI</h4>
+              <p>Tự động chuyển từ Gemini 3.5 Flash sang Gemini 2.5 Flash / Flash Lite nếu gặp lỗi mạng hoặc chạm quota.</p>
+            </div>
+          </div>
+          <div class="df-card">
+            <div class="df-icon"><i class="fa-solid fa-toggle-on"></i></div>
+            <div class="df-info">
+              <h4>Tự ẩn tính năng VietSchool khi lỗi</h4>
+              <p>Nếu dùng tool ngoài trang VietSchool, tool tự động ẩn các nút liên quan và biến thành trợ lý AI & tiện ích cá nhân.</p>
+            </div>
+          </div>
+          <div class="df-card">
+            <div class="df-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <div class="df-info">
+              <h4>Tùy biến Theme & Giao diện</h4>
+              <p>Tự do lựa chọn màu chủ đạo, gradient, độ mờ nền, font size, xuất/nhập cấu hình theo ý thích.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Core Features Details -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="sub-badge">Đầy đủ & Vượt trội</span>
+        <h2>Tính năng vượt bậc</h2>
+        <p>Mọi công cụ bạn cần để học tập tiện lợi, nhanh chóng và an tâm trên nền tảng VietSchool.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="f-box">
+          <div class="f-icon"><i class="fa-solid fa-door-open"></i></div>
+          <h3>Tự động quét & vào phòng</h3>
+          <p>Tự động bắt lệnh API của hệ thống, lấy danh sách tất cả các môn học, lớp học và tiến hành vào phòng tự động.</p>
+          <ul class="f-list">
+            <li><i class="fa-solid fa-check"></i> Chạy song song nhiều phòng cùng lúc</li>
+            <li><i class="fa-solid fa-check"></i> Hẹn giờ nghỉ thông minh chống nghẽn mạng</li>
+            <li><i class="fa-solid fa-check"></i> Tự giữ phiên (Keep-alive ping 4 phút/lần)</li>
+          </ul>
+        </div>
+
+        <div class="f-box">
+          <div class="f-icon"><i class="fa-solid fa-book-reader"></i></div>
+          <h3>Xác nhận đọc bài học chuẩn</h3>
+          <p>Tự động đếm số lượng từ ngữ của bài học để ước lượng thời gian đọc hợp lý trước khi gửi tín hiệu xác nhận đọc xong.</p>
+          <ul class="f-list">
+            <li><i class="fa-solid fa-check"></i> Tránh bị ghi nhận spam hay thao tác ảo</li>
+            <li><i class="fa-solid fa-check"></i> Bỏ qua các phòng không có nội dung đọc</li>
+            <li><i class="fa-solid fa-check"></i> Đánh dấu trạng thái đã hoàn thành vào máy</li>
+          </ul>
+        </div>
+
+        <div class="f-box">
+          <div class="f-icon"><i class="fa-solid fa-shield-virus"></i></div>
+          <h3>An toàn phòng kiểm tra</h3>
+          <p>Tuyệt đối không tự động làm bài kiểm tra nếu chưa có sự đồng ý của người dùng, tránh kích hoạt thời gian làm bài ngoài ý muốn.</p>
+          <ul class="f-list">
+            <li><i class="fa-solid fa-check"></i> Hộp thoại hỏi xác nhận vào từng bài kiểm tra</li>
+            <li><i class="fa-solid fa-check"></i> Tùy chọn chỉ vào phòng, không làm bài</li>
+            <li><i class="fa-solid fa-check"></i> Cảnh báo trước giờ hết hạn theo phút</li>
+          </ul>
+        </div>
+
+        <div class="f-box">
+          <div class="f-icon"><i class="fa-solid fa-brain"></i></div>
+          <h3>Trợ lý học tập AI (Gemini)</h3>
+          <p>Tích hợp AI siêu tốc giải bài toán, lý, hóa, ngoại ngữ, tóm tắt bài và trắc nghiệm với khả năng nhận diện hình ảnh xuất sắc.</p>
+          <ul class="f-list">
+            <li><i class="fa-solid fa-check"></i> Tải lên cùng lúc đến 10 ảnh chất lượng cao</li>
+            <li><i class="fa-solid fa-check"></i> Chụp màn hình trực tiếp từ trình duyệt</li>
+            <li><i class="fa-solid fa-check"></i> Thư viện Prompt sẵn có: dịch, tóm tắt, giải đề</li>
+          </ul>
+        </div>
+
+        <div class="f-box">
+          <div class="f-icon"><i class="fa-solid fa-filter"></i></div>
+          <h3>Bộ lọc & Ghim bài học</h3>
+          <p>Lọc bài học theo môn học, lớp học, từ khóa bỏ qua hoặc từ khóa ưu tiên ghim lên đầu danh sách để xử lý trước.</p>
+          <ul class="f-list">
+            <li><i class="fa-solid fa-check"></i> Bỏ qua phòng chứa từ khóa (thể dục, âm nhạc...)</li>
+            <li><i class="fa-solid fa-check"></i> Ghim ưu tiên bài quan trọng (toán, văn...)</li>
+            <li><i class="fa-solid fa-check"></i> Hỗ trợ cờ bỏ qua/ghim riêng từng phòng</li>
+          </ul>
+        </div>
+
+        <div class="f-box">
+          <div class="f-icon"><i class="fa-solid fa-database"></i></div>
+          <h3>Quản lý dữ liệu & Xuất CSV</h3>
+          <p>Lưu trữ cục bộ an toàn trên trình duyệt, hỗ trợ sao lưu file JSON và trích xuất báo cáo kết quả hoàn thành ra file CSV/Excel.</p>
+          <ul class="f-list">
+            <li><i class="fa-solid fa-check"></i> Xem/sửa trực tiếp từng khoá LocalStorage</li>
+            <li><i class="fa-solid fa-check"></i> Xuất file báo cáo tuần định dạng .txt</li>
+            <li><i class="fa-solid fa-check"></i> Sao lưu & khôi phục toàn bộ cài đặt 1-click</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step-by-Step Guide Section -->
+  <section class="section guide-section" id="guide">
+    <div class="container">
+      <div class="section-header">
+        <span class="sub-badge">Bắt đầu ngay</span>
+        <h2>Hướng dẫn cài đặt & sử dụng</h2>
+        <p>Hướng dẫn chi tiết từng bước cho máy tính (PC/Laptop) và thiết bị di động (iOS / Android).</p>
+      </div>
+
+      <!-- Guide Tabs -->
+      <div class="guide-tabs">
+        <button class="g-tab on" data-target="tab-pc">
+          <i class="fa-solid fa-desktop"></i>
+          <span>Máy tính (PC / Laptop)</span>
+        </button>
+        <button class="g-tab" data-target="tab-ios">
+          <i class="fa-brands fa-apple"></i>
+          <span>iOS (iPhone / Safari)</span>
+        </button>
+        <button class="g-tab" data-target="tab-android">
+          <i class="fa-brands fa-android"></i>
+          <span>Android (Kiwi / Eruda)</span>
+        </button>
+      </div>
+
+      <!-- Tab Content: PC -->
+      <div class="guide-content on" id="tab-pc">
+        <div class="steps-list">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h3>Đăng nhập vào hệ thống VietSchool</h3>
+              <p>Mở trình duyệt (Chrome, Cốc Cốc, Edge, Brave...) và truy cập vào trang học trực tuyến VietSchool của trường bạn, sau đó đăng nhập tài khoản học sinh.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h3>Mở cửa sổ lập trình (Console F12)</h3>
+              <p>Nhấn phím <code>F12</code> (hoặc tổ hợp phím <code>Ctrl + Shift + I</code>, trên Mac là <code>Cmd + Option + I</code>), sau đó chuyển sang thẻ <strong>Console</strong>.</p>
+              <div class="tip-box">
+                <i class="fa-solid fa-lightbulb"></i> Mẹo: Nếu phím F12 bị khóa, bạn có thể nhấp chuột phải vào bất kỳ vị trí nào trên trang và chọn <strong>Kiểm tra (Inspect)</strong>.
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h3>Sao chép và Dán lệnh khởi chạy</h3>
+              <p>Sao chép đoạn mã bên dưới, dán vào dòng lệnh ở thẻ Console và nhấn <strong>Enter</strong>:</p>
+              <div class="code-snippet">
+                <pre><code>fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);</code></pre>
+                <button class="copy-btn mini" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <h3>Bắt đầu sử dụng</h3>
+              <p>Giao diện VietSchool Tool sẽ xuất hiện ở góc trên bên phải màn hình. Bấm nút <strong>Làm mới</strong> hoặc tải lại danh sách bài học trên trang để tool tự động nhận diện và xử lý!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: iOS -->
+      <div class="guide-content" id="tab-ios">
+        <div class="steps-list">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h3>Cài đặt tiện ích mở rộng cho Safari</h3>
+              <p>Tải ứng dụng <strong>Stay</strong> hoặc <strong>Userscripts</strong> từ App Store về iPhone/iPad của bạn, sau đó vào <em>Cài đặt &gt; Safari &gt; Phần mở rộng</em> và cấp quyền cho tiện ích.</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h3>Thêm Script chạy trên Mobile</h3>
+              <p>Trong ứng dụng Stay/Userscripts, chọn thêm Userscript mới và nhập đường dẫn bản Mobile:</p>
+              <div class="code-snippet">
+                <pre><code>https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-mb.js</code></pre>
+                <button class="copy-btn mini" data-code="https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-mb.js">
+                  <i class="fa-regular fa-copy"></i> Copy Link
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h3>Truy cập VietSchool trên Safari</h3>
+              <p>Vào trang VietSchool trên Safari, script sẽ tự động kích hoạt giao diện tối ưu riêng cho màn hình điện thoại với font chữ lớn và thanh điều hướng cảm ứng thuận tiện.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Content: Android -->
+      <div class="guide-content" id="tab-android">
+        <div class="steps-list">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <h3>Sử dụng trình duyệt hỗ trợ Extension</h3>
+              <p>Cài đặt trình duyệt <strong>Kiwi Browser</strong> hoặc <strong>Lemur Browser</strong> từ Google Play Store (các trình duyệt này hỗ trợ DevTools và Violentmonkey/Tampermonkey).</p>
+            </div>
+          </div>
+
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <h3>Mở Developer Tools hoặc Bookmarklet</h3>
+              <p>Trên Kiwi Browser: Bấm vào menu 3 chấm ở góc trên &gt; chọn <strong>Developer Tools</strong> &gt; chuyển qua tab <strong>Console</strong> và dán đoạn mã chạy nhanh tương tự như trên PC.</p>
+              <div class="code-snippet">
+                <pre><code>fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);</code></pre>
+                <button class="copy-btn mini" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Shortcuts Reference -->
+  <section class="section shortcuts-section" id="shortcuts">
+    <div class="container">
+      <div class="section-header">
+        <span class="sub-badge">Tiện lợi & Nhanh chóng</span>
+        <h2>Bảng phím tắt điều khiển</h2>
+        <p>Thao tác nhanh gọn mọi tính năng mà không cần dùng chuột.</p>
+      </div>
+
+      <div class="shortcuts-grid">
+        <div class="sc-card">
+          <div class="keys">
+            <kbd>Alt</kbd> + <kbd>J</kbd>
+          </div>
+          <div class="sc-desc">
+            <h4>Ẩn / Hiện Bảng Tool</h4>
+            <p>Bật hoặc tắt hiển thị widget mà không làm gián đoạn tiến trình đang chạy ngầm.</p>
+          </div>
+        </div>
+
+        <div class="sc-card">
+          <div class="keys">
+            <kbd>Alt</kbd> + <kbd>S</kbd>
+          </div>
+          <div class="sc-desc">
+            <h4>Bắt đầu / Tạm dừng</h4>
+            <p>Khởi động chu trình quét phòng hoặc tạm dừng ngay lập tức khi cần thiết.</p>
+          </div>
+        </div>
+
+        <div class="sc-card">
+          <div class="keys">
+            <kbd>Alt</kbd> + <kbd>R</kbd>
+          </div>
+          <div class="sc-desc">
+            <h4>Làm mới danh sách phòng</h4>
+            <p>Gửi lệnh cập nhật lại danh sách bài học và trạng thái mới nhất từ máy chủ.</p>
+          </div>
+        </div>
+
+        <div class="sc-card">
+          <div class="keys">
+            <kbd>Alt</kbd> + <kbd>K</kbd>
+          </div>
+          <div class="sc-desc">
+            <h4>Bảng lệnh nhanh (Command Palette)</h4>
+            <p>Mở thanh tìm kiếm lệnh và phòng học nhanh chóng kiểu VS Code / macOS Spotlight.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section faq-section" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="sub-badge">Giải đáp thắc mắc</span>
+        <h2>Câu hỏi thường gặp</h2>
+        <p>Những thông tin quan trọng giúp bạn an tâm sử dụng công cụ một cách hiệu quả nhất.</p>
+      </div>
+
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>1. Tool này có an toàn cho tài khoản học sinh không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Công cụ chỉ mô phỏng các thao tác duyệt bài học hợp lệ dựa trên chính phiên đăng nhập trên trình duyệt của bạn. Tool không can thiệp sâu vào cơ sở dữ liệu và có chế độ đếm thời gian đọc bài tự nhiên. Tuy nhiên bạn nên sử dụng công cụ với mục đích hỗ trợ học tập một cách chừng mực.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>2. Làm sao để sử dụng tính năng Chat AI giải bài tập?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Bạn chỉ cần có một Google Gemini API Key hoàn toàn miễn phí từ <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a>. Trong tab <strong>Công cụ &gt; Chat AI &gt; Cài đặt AI</strong> của tool, dán API Key của bạn vào. Tool hỗ trợ tải lên tối đa 10 ảnh bài tập cùng lúc để giải thích chi tiết từng bước.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>3. Điều gì xảy ra nếu mạng bị mất kết nối hoặc phiên đăng nhập hết hạn?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Tool có cơ chế tự động khôi phục (Auto-recover) và tự giữ phiên (Keep-alive ping 4 phút/lần). Khi mất mạng, tool sẽ thông báo và tạm dừng; khi mạng kết nối trở lại, tool sẽ tự động tiếp tục quét mà không cần bạn phải thao tác lại.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>4. Tôi có thể đổi giao diện và màu sắc của bảng công cụ không?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Có! Tool cung cấp tab <strong>Màu</strong> cho phép bạn xem trước và đổi màu riêng cho từng chi tiết (nền, chữ, viền, ô thẻ, nút bấm, gradient...), đồng thời hỗ trợ chuyển đổi giữa chế độ Tối (Dark) và Sáng (Light) tùy thích.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>5. Nếu tôi dán script vào một trang web khác ngoài VietSchool thì sao?</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Từ phiên bản v2.0, nếu script phát hiện không ở trang VietSchool (hoặc chưa đăng nhập), nó sẽ tự động ẩn tất cả các tính năng liên quan đến VietSchool (nút chạy, nút quét, tab phòng, thống kê) và tự động mở tab <strong>Công cụ AI</strong> để bạn sử dụng như một trợ lý AI giải bài và tiện ích ghi chép độc lập!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container cta-content">
+      <h2>Sẵn sàng tối ưu hóa việc học trực tuyến?</h2>
+      <p>Truy cập GitHub repo để xem mã nguồn, đóng góp ý kiến hoặc chia sẻ cho bạn bè cùng lớp!</p>
+      <div class="cta-btns">
+        <button class="btn btn-primary" id="copyBottomBtn" data-code="fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);">
+          <i class="fa-regular fa-copy"></i> Sao chép lệnh F12
+        </button>
+        <a href="https://github.com/TanhIsMe/VietSchool-Tool" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <i class="fa-brands fa-github"></i> Star trên GitHub ⭐
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-col">
+        <div class="footer-logo">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <span>VietSchool Tool</span>
+        </div>
+        <p class="footer-desc">Công cụ hỗ trợ học tập trực tuyến thông minh, tiện ích tự động hóa và trợ lý giải đề AI mạnh mẽ.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Liên kết nhanh</h4>
+        <ul>
+          <li><a href="#features">Tính năng</a></li>
+          <li><a href="#guide">Hướng dẫn sử dụng</a></li>
+          <li><a href="#shortcuts">Phím tắt nhanh</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Mã nguồn & Đóng góp</h4>
+        <ul>
+          <li><a href="https://github.com/TanhIsMe/VietSchool-Tool" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> GitHub Repository</a></li>
+          <li><a href="https://github.com/TanhIsMe/VietSchool-Tool/blob/main/LICENSE" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-scale-balanced"></i> Giấy phép MIT</a></li>
+          <li><a href="https://github.com/TanhIsMe/VietSchool-Tool/issues" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-circle-exclamation"></i> Báo lỗi & Góp ý</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 VietSchool Tool. Được phát hành dưới giấy phép mã nguồn mở <a href="https://github.com/TanhIsMe/VietSchool-Tool/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>.</p>
+      <p class="disclaimer">Lưu ý: Dự án được tạo ra với mục đích học tập và hỗ trợ nghiên cứu công nghệ web.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <i class="fa-solid fa-circle-check"></i>
+    <span id="toastMsg">Đã sao chép lệnh vào bộ nhớ tạm!</span>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
