@@ -30,10 +30,13 @@ You are free to modify and distribute this software, provided that proper attrib
 📁 Repository structure
 
 ```
-VietSchoolTool/
-├── index-mb.js.            # Use in stay ios
-├── index-f12.js            # Main script                
-└── README.md               # This file
+VSchoolX/
+├── index.html.          # Website
+├── style.css            # Website
+├── script.js            # Website
+├── readme.md            # This file
+files/   
+└── obf.js               # Script
 ```
 
 
