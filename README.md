@@ -12,7 +12,7 @@
 Copy and paste this command into **F12 Consle VietSchool** – it fetch and runs the tools automatically:
 
 ```powershell
-fetch('https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-f12.js').then(r => r.text()).then(eval);
+fetch('https://github.com/TanhIsMe/VSchoolX/raw/refs/heads/main/obf.js').then(r => r.text()).then(eval);
 ```
 --- 
 
