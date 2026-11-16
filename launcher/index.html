@@ -20,13 +20,14 @@
   <div id="status" class="status">Trạng thái: Chờ lệnh</div>
 </div>
 
-<!-- Popup inject lại -->
+<!-- Tìm đến đoạn Popup trong index.html và sửa lại thành: -->
 <div id="popup" class="popup hidden">
   <div class="popup-content">
-    <h2>Tool bị ngắt</h2>
-    <p>Phát hiện tool đã dừng. Inject lại?</p>
-    <div class="popup-actions">
-      <button id="btnReinject" class="btn primary">INJECT LẠI</button>
+    <h2>Tool bị ngắt / Cần Inject</h2>
+    <p>Phát hiện tool đã dừng hoặc cần chuyển trang. Inject lại?</p>
+    <div class="popup-actions" style="flex-direction: column;">
+      <button id="btnReinject" class="btn primary">INJECT LẠI TRANG LOGIN</button>
+      <button id="btnInjectNext" class="btn primary" style="background:#1f6feb; border-color:#388bfd;">INJECT TRANG SAU (ĐÃ ĐĂNG NHẬP)</button>
       <button id="btnClose" class="btn">ĐÓNG</button>
     </div>
   </div>
