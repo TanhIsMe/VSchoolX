@@ -1,6 +1,6 @@
 
 # Project VietSchool Tool                                 
-**Version 1.0.1 Lastest**  
+**Version 1.0.1**  
 *This tool created for reference and learning purpose💖*
 
 
@@ -16,14 +16,17 @@
 Copy and paste this command into **F12 Consle VietSchool** – it fetch and runs the tools automatically:
 
 ```javascript
-fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);
+fetch('vschoolx.vercel.app/files/lastest.js').then(r => r.text()).then(eval);
+```
+*or the version stable*
+```javascript
+fetch('vschoolx.vercel.app/files/stable.js').then(r => r.text()).then(eval);
 ```
 --- 
 
 📜 License
 
 Released under the MIT License.
-You are free to modify and distribute this software, provided that proper attribution is given to the original author.
 
 ---
 
