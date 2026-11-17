@@ -16,7 +16,6 @@
 Copy and paste this command into **F12 Consle VietSchool** – it fetch and runs the tools automatically:
 
 ```javascript
-fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/obf.js').then(r => r.text()).then(eval);
 fetch('vschoolx.vercel.app/files/lastest.js').then(r => r.text()).then(eval);
 ```
 *-> or the version stable*
