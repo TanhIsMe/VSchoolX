@@ -16,11 +16,11 @@
 Copy and paste this command into **F12 Consle VietSchool** – it fetch and runs the tools automatically:
 
 ```javascript
-fetch('https://vschoolx.vercel.app/files/lastest.js').then(r => r.text()).then(eval);
+fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/lastest.js').then(r => r.text()).then(eval);
 ```
 *or the version stable*
 ```javascript
-fetch('https://vschoolx.vercel.app/files/stable.js').then(r => r.text()).then(eval);
+fetch('https://raw.githubusercontent.com/TanhIsMe/VSchoolX/refs/heads/main/files/stable.js').then(r => r.text()).then(eval);
 ```
 --- 
 
