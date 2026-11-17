@@ -431,10 +431,23 @@
             <div class="step-body">
               <h3>Thêm Script chạy trên Mobile</h3>
               <p>Trong ứng dụng WebInspector, cấp quyền safari cho tiện ích</p>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <h3>Sao chép và Dán lệnh khởi chạy</h3>
+              <p>Sao chép đoạn mã bên dưới, dán vào dòng lệnh ở thẻ Console và nhấn <strong>Enter</strong>:</p>
+              <p><strong>Latest (mới nhất):</strong></p>
               <div class="code-snippet">
-                <pre><code>https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-mb.js</code></pre>
-                <button class="copy-btn mini" data-code="https://raw.githubusercontent.com/TanhIsMe/VietSchool-Tool/refs/heads/main/index-mb.js">
-                  <i class="fa-regular fa-copy"></i> Copy Link
+                <pre><code>fetch('https://vschoolx.vercel.app/files/lastest.js').then(r => r.text()).then(eval);</code></pre>
+                <button class="copy-btn mini" data-code="fetch('https://vschoolx.vercel.app/files/lastest.js').then(r => r.text()).then(eval);">
+                  <i class="fa-regular fa-copy"></i> Copy
+                </button>
+              </div>
+              <p><strong>Stable (ổn định):</strong></p>
+              <div class="code-snippet">
+                <pre><code>fetch('https://vschoolx.vercel.app/files/stable.js').then(r => r.text()).then(eval);</code></pre>
+                <button class="copy-btn mini" data-code="fetch('https://vschoolx.vercel.app/files/stable.js').then(r => r.text()).then(eval);">
+                  <i class="fa-regular fa-copy"></i> Copy
                 </button>
               </div>
             </div>
